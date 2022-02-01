@@ -1,12 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import {
-  ThumbDownOutlined,
-  ThumbUp,
-  ThumbUpAlt,
-  ThumbUpAltTwoTone,
-  ThumbUpOutlined,
-} from "@material-ui/icons";
+import { ThumbDownOutlined, ThumbUpOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   joke: {
@@ -15,9 +9,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 400,
+    padding: "1rem",
   },
   btn: {
     display: "flex",
+    flexDirection: "column",
     marginRight: "1rem",
     justifyContent: "center",
     alignItems: "center",
@@ -31,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
   votes: {
     fontSize: 20,
   },
-  joke: {
-    width: "150%",
+  text: {
+    width: "75%",
     fontSize: "1.2rem",
   },
   emoji: {
@@ -43,19 +39,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Joke() {
+function Joke({ votes, text, id, like, dislike }) {
   const classes = useStyles();
+  console.log(votes);
+  const getEmoji = useCallback((votes) => {
+    if (votes >= 9) {
+      return "em em-rolling_on_the_floor_laughing";
+    } else if (votes >= 6) {
+      return "em em-laughing";
+    } else if (votes >= 3) {
+      return "em em-slightly_smiling_face";
+    } else if (votes >= 0) {
+      return "em em-neutral_face";
+    } else {
+      return "em em-angry";
+    }
+  }, []);
+
   return (
     <Box className={classes.joke}>
       <Box className={classes.btn}>
-        <ThumbUpOutlined style={{ color: "red" }} className={classes.likeBtn} />
-        <Typography className={classes.votes}>0</Typography>
-        <ThumbDownOutlined className={classes.likeBtn} />
+        <ThumbUpOutlined
+          style={{ color: "green" }}
+          className={classes.likeBtn}
+          onClick={() => like()}
+        />
+        <Typography className={classes.votes}>{votes}</Typography>
+        <ThumbDownOutlined
+        style={{ color: "red" }}
+          className={classes.likeBtn}
+          onClick={() => dislike()}
+        />
       </Box>
-      {/* <Box className={classes.joke}>{text}</Box>
+      <Box className={classes.text}>{text}</Box>
       <Box className={classes.emoji}>
         <i className={getEmoji(votes)} />
-      </Box> */}
+      </Box>
     </Box>
   );
 }
