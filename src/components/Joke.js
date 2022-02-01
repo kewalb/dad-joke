@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Joke({ votes, text, id, like, dislike }) {
+function Joke({ votes, text, like, dislike }) {
   const classes = useStyles();
   console.log(votes);
   const getEmoji = useCallback((votes) => {

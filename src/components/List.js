@@ -58,7 +58,6 @@ function List() {
 
   const getJoke = async () => {
     const newJoke = []
-    let id = 0
     for(let i=0; i<7; i++){
         let res = await axios.get("https://icanhazdadjoke.com/", {
             headers: { Accept: "application/json" },
